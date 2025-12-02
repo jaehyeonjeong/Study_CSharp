@@ -24,6 +24,7 @@
 
         <ui:Button
             Grid.Column="0"
+            x:Name="btnClickMe"
             Command="{Binding ViewModel.CounterIncrementCommand, Mode=OneWay}"
             Content="Click me!"
             Icon="Fluent24" />
@@ -31,6 +32,6 @@
             Grid.Column="1"
             Margin="12,0,0,0"
             VerticalAlignment="Center"
-            Text="{Binding ViewModel }" />
+            Text="{Binding ViewModel.Text01, Mode=OneWay}" />
     </Grid>
 </Page>
