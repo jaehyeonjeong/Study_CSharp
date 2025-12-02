@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using UiDesktopApp1.Interface;
+using UiDesktopApp1.Models;
 using UiDesktopApp1.Services;
 using UiDesktopApp1.ViewModels.Pages;
 using UiDesktopApp1.ViewModels.Windows;
@@ -45,6 +46,10 @@ namespace UiDesktopApp1
 
                 // 중요 : 대상 서비스의 접목 시킬 인터페이스를 구동하기 위한 방법
                 services.AddSingleton<IDateTime, DateTimeService>();            // 이런 방식으로 등록 <Interface, Service>
+
+                //DB 서비스 인터페이스 활성화
+                services.AddSingleton<IDatabase<GangnamguPopulation>, GangnamguPopulationService>();
+                services.AddDbContext<WpfProjectDatabaseContext>(); // 이건 뭐징?
 
                 // Main window with navigation
                 services.AddSingleton<INavigationWindow, MainWindow>();

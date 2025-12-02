@@ -1,4 +1,5 @@
 ﻿using UiDesktopApp1.Interface;
+using UiDesktopApp1.Models;
 
 namespace UiDesktopApp1.ViewModels.Pages
 {
@@ -23,10 +24,14 @@ namespace UiDesktopApp1.ViewModels.Pages
 
         private readonly IDateTime _iDateTime;
 
+        private readonly IDatabase<GangnamguPopulation> _iDatabase;
+
         // 생성자 주입 방식 형태로 데이터 호출, "ctor" 단축키 사용
-        public DashboardViewModel(IDateTime dateTime)   // 인터페이스 파라미터 주입  
+        public DashboardViewModel(IDateTime dateTime, IDatabase<GangnamguPopulation> database)   // 인터페이스 파라미터 주입  
         {
             this._iDateTime = dateTime;
+            
+            this._iDatabase = database;
         }
 
         // 새로 생성한 Observalble Property
@@ -48,6 +53,9 @@ namespace UiDesktopApp1.ViewModels.Pages
             //Counter++;  // 카운터 속성을 통해 변수에 접근(어디에?)
             // 속성코드가 자동으로 제너레이션 된다.
             //this.Text01 = "test";        // 자동 생성된 변수를 이런 방법으로 사용할 수 있음
+
+            var datas = this._iDatabase.GetDataBaseTable();
+
             this.Text01 = "Clicked";
         }
         // 이렇게하면 속성을 일일히 생성할 필요는 없어진다.
