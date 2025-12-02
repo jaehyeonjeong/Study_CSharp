@@ -28,9 +28,14 @@
             Command="{Binding ViewModel.CounterIncrementCommand, Mode=OneWay}"
             Content="Click me!"
             Icon="Fluent24" />
+        <ui:Button
+            Grid.Column ="1"
+            Command="{Binding ViewModel.TextChangedCommand, Mode=OneWay}"
+            Content="Click me 2!"
+            Icon="Fluent24" Margin="240,0,0,0" />
         <TextBlock
             Grid.Column="1"
-            Margin="12,0,0,0"
+            Margin="12,0,118,0"
             VerticalAlignment="Center"
             Text="{Binding ViewModel.Text01, Mode=OneWay}" />
     </Grid>

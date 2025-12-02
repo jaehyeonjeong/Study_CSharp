@@ -37,5 +37,12 @@
             this.Text01 = "Clicked";
         }
         // 이렇게하면 속성을 일일히 생성할 필요는 없어진다.
+
+        // 로직 클래스를 내부적으로만 사용하는 경우
+        [RelayCommand]  // 외부적으로 사용하는 경우 자동으로 제네레이트 시킴
+        private void OnTextChanged()        // 뷰에서 커멘드로 자동 제네레이션
+        {
+            this.Text01 = "Changed Text";
+        }
     }
 }
