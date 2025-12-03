@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:UiDesktopApp1.Views.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:UiDesktopApp1.Controls"
     xmlns:models="clr-namespace:UiDesktopApp1.Models"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     Title="DataPage"
@@ -23,7 +24,10 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0">
+        <controls:LoadingControl Grid.Column="0" HorizontalAlignment="Center" 
+                                 x:Name="searchGridLoadingControl" Visibility="Visible"/>
+
+        <Grid Grid.Column="0" x:Name="searchGrid" Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
@@ -90,7 +94,8 @@
                 </ui:TextBlock>
                 <ui:TextBox x:Name="tbxNumOfPPHouseolds" Margin="0,0,0,10"></ui:TextBox>
 
-                <ui:Button Height="50" Width="300" Background="SteelBlue" Command="{Binding ViewModel.SelectedAdministrativeAgencyCommand, Mode=OneWay}"
+                <ui:Button Height="50" Width="300" Background="SteelBlue" 
+                           Command="{Binding ViewModel.SelectedAdministrativeAgencyCommand, Mode=OneWay}"
                            Content="Create" Foreground="White" Margin="0, 0, 0, 10"/>
 
                 <Grid>
@@ -117,7 +122,10 @@
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Column="1">
+        <controls:LoadingControl Grid.Column="1" HorizontalAlignment="Center" 
+                         x:Name="dgGridLoadingControl" Visibility="Visible"/>
+
+        <Grid Grid.Column="1" x:Name="dgGrid" Visibility="Collapsed">
             <DataGrid x:Name="dgGangnamguPopulation" ItemsSource="{Binding ViewModel.GangnamguPopulations, Mode=OneWay}"/>
         </Grid>
     </Grid>
