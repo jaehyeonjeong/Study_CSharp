@@ -8,22 +8,16 @@ namespace UiDesktopApp1.ViewModels.Pages
 {
     public partial class DataViewModel : ObservableObject, INavigationAware
     {
+        #region FIELDS
         private bool _isInitialized = false;
 
         private readonly IDatabase<GangnamguPopulation?>? _population;
+        #endregion
 
-        public DataViewModel(IDatabase<GangnamguPopulation?>? database)
-        {
-            this._population = database;
-        }
-
-        [ObservableProperty]
-        private IEnumerable<DataColor> _colors;
-
+        #region PROPERTIES
         // Atttibute를 통한 DB 맴버 자동 생성
         [ObservableProperty]
         private IEnumerable<GangnamguPopulation?>? _gangnamguPopulations;
-
 
         [ObservableProperty]
         private IEnumerable<string?>? _administrativeAgency;
@@ -31,23 +25,77 @@ namespace UiDesktopApp1.ViewModels.Pages
         [ObservableProperty]
         private string? _selectedAdministrativeAgency;
 
-        public Task OnNavigatedToAsync()
+        [ObservableProperty]
+        private int? _selectedTotalPopulation;
+
+        [ObservableProperty]
+        private int? _selectedMalePopulation;
+
+        [ObservableProperty]
+        private int? _selectedFeMalePopulation;
+
+        [ObservableProperty]
+        private double? _selectedSexRatio;
+
+        [ObservableProperty]
+        private int? _selectedNumberOfHouseholds;
+
+        [ObservableProperty]
+        private double? _selectedNumberOfPeoplePerHouseholds;
+        #endregion
+
+        #region CONSTRUCTOR
+        public DataViewModel(IDatabase<GangnamguPopulation?>? database)
         {
-            if (!_isInitialized)
-                //InitializeViewModel();
-                InitializeViewModelAsync();
-
-            return Task.CompletedTask;
+            this._population = database;
         }
+        #endregion
 
-        public Task OnNavigatedFromAsync() => Task.CompletedTask;
-
+        #region COMMANDS
         [RelayCommand]
         private void OnSelectedAdministrativeAgency()
         { // 암시적 커멘드 생성 (DataPage.xaml Selected 데이터 연결)
             var selectedData = this.SelectedAdministrativeAgency;
         }
 
+        // CRUDE 작업은 Command에..
+        [RelayCommand]
+        private void CreateNewData()
+        {
+            // DB 객체 new 생성 
+            GangnamguPopulation gangnamguPopulation = new GangnamguPopulation();
+
+            // PostgreSQL에서 성의한 TotalPopulation에 
+            gangnamguPopulation.AdministrativeAgency = this.SelectedAdministrativeAgency;
+            gangnamguPopulation.TotalPopulation = this.SelectedTotalPopulation;
+            gangnamguPopulation.MalePopulation = this.SelectedMalePopulation;
+            gangnamguPopulation.FemalePopulation = this.SelectedFeMalePopulation;
+            gangnamguPopulation.SexRatio = this.SelectedSexRatio;
+            gangnamguPopulation.NumberOfHouseholds = this.SelectedNumberOfHouseholds;
+            gangnamguPopulation.NumberOfPeoplePerHousehold = this.SelectedNumberOfPeoplePerHouseholds;
+            this._population?.InsertDB(gangnamguPopulation);
+        }
+
+        [RelayCommand]
+        private void ReadAllData()
+        {
+            this.GangnamguPopulations = this._population?.GetDataBaseTable();
+        }
+        #endregion
+
+        #region METHODS
+        public Task OnNavigatedToAsync()
+        {
+            if (!_isInitialized)
+            {
+                //InitializeViewModel();
+                InitializeViewModelAsync();
+            }
+
+            return Task.CompletedTask;
+        }
+
+        public Task OnNavigatedFromAsync() => Task.CompletedTask;
         private async Task InitializeViewModelAsync()    // async Task를 붙여 비동기 식으로 변경 
         {
             // DB 전체 데이터 베이스 테이블 데이터 호출
@@ -67,5 +115,6 @@ namespace UiDesktopApp1.ViewModels.Pages
 
             _isInitialized = true;
         }
+        #endregion
     }
 }

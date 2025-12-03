@@ -54,48 +54,54 @@
                     <Run Text="Administrative Agency "/>
                     <Run Text="*" Foreground="OrangeRed"/>
                 </ui:TextBlock>
-                <ComboBox x:Name="cbxAdminAgency" SelectedItem="{Binding ViewModel.SelectedAdministrativeAgency, Mode=TwoWay}"
+                <ComboBox x:Name="cbxAdminAgency" Text="{Binding ViewModel.SelectedAdministrativeAgency, Mode=TwoWay}"
                           ItemsSource="{Binding ViewModel.AdministrativeAgency, Mode=TwoWay}" Margin="0,0,0,10"
-                          SelectionChanged="cbxAdminAgency_SelectionChanged" />
+                          IsEditable="True" SelectionChanged="cbxAdminAgency_SelectionChanged" />
 
                 <ui:TextBlock x:Name="tblkTotalPopulation" Margin="0,0,0,10">
                     <Run Text="Total Population "/>
                     <Run Text="*" Foreground="OrangeRed"/>
                 </ui:TextBlock>
-                <ui:TextBox x:Name="tbxTotPopulation" Margin="0,0,0,10"></ui:TextBox>
+                <ui:NumberBox x:Name="tbxTotPopulation" Margin="0,0,0,10"
+                            Text="{Binding ViewModel.SelectedTotalPopulation, Mode=TwoWay}"></ui:NumberBox>
 
                 <ui:TextBlock x:Name="tblkMalePopulation" Margin="0,0,0,10">
                     <Run Text="Male Population "/>
                     <Run Text="*" Foreground="OrangeRed"/>
                 </ui:TextBlock>
-                <ui:TextBox x:Name="tbxMalePopulation" Margin="0,0,0,10"></ui:TextBox>
+                <ui:NumberBox x:Name="tbxMalePopulation" Margin="0,0,0,10"
+                            Text="{Binding ViewModel.SelectedMalePopulation, Mode=TwoWay}"></ui:NumberBox>
 
                 <ui:TextBlock x:Name="tblkFeMalePopulation" Margin="0,0,0,10">
                     <Run Text="FeMale Population "/>
                     <Run Text="*" Foreground="OrangeRed"/>
                 </ui:TextBlock>
-                <ui:TextBox x:Name="tbxFeMalePopulation" Margin="0,0,0,10"></ui:TextBox>
+                <ui:NumberBox x:Name="tbxFeMalePopulation" Margin="0,0,0,10"
+                            Text="{Binding ViewModel.SelectedFeMalePopulation, Mode=TwoWay}"></ui:NumberBox>
 
                 <ui:TextBlock x:Name="tblkSexRatio" Margin="0,0,0,10">
                     <Run Text="Sex Ratio "/>
                     <Run Text="*" Foreground="OrangeRed"/>
                 </ui:TextBlock>
-                <ui:TextBox x:Name="tbxSexRatio" Margin="0,0,0,10"></ui:TextBox>
+                <ui:NumberBox x:Name="tbxSexRatio" Margin="0,0,0,10"
+                            Text="{Binding ViewModel.SelectedSexRatio, Mode=TwoWay}"></ui:NumberBox>
 
                 <ui:TextBlock x:Name="tblkNumOfHouseolds" Margin="0,0,0,10">
                     <Run Text="Number Of Households "/>
                     <Run Text="*" Foreground="OrangeRed"/>
                 </ui:TextBlock>
-                <ui:TextBox x:Name="tbxNumOfHouseolds" Margin="0,0,0,10"></ui:TextBox>
+                <ui:NumberBox x:Name="tbxNumOfHouseolds" Margin="0,0,0,10"
+                            Text="{Binding ViewModel.SelectedNumberOfHouseholds, Mode=TwoWay}"></ui:NumberBox>
 
                 <ui:TextBlock x:Name="tblkNumOfPPHouseolds" Margin="0,0,0,10">
                     <Run Text="Number Of People Per Households "/>
                     <Run Text="*" Foreground="OrangeRed"/>
                 </ui:TextBlock>
-                <ui:TextBox x:Name="tbxNumOfPPHouseolds" Margin="0,0,0,10"></ui:TextBox>
+                <ui:NumberBox x:Name="tbxNumOfPPHouseolds" Margin="0,0,0,10"
+                            Text="{Binding ViewModel.SelectedNumberOfPeoplePerHouseholds, Mode=TwoWay}"></ui:NumberBox>
 
                 <ui:Button Height="50" Width="300" Background="SteelBlue" 
-                           Command="{Binding ViewModel.SelectedAdministrativeAgencyCommand, Mode=OneWay}"
+                           Command="{Binding ViewModel.CreateNewDataCommand, Mode=OneWay}"
                            Content="Create" Foreground="White" Margin="0, 0, 0, 10"/>
 
                 <Grid>
@@ -107,9 +113,9 @@
                     <StackPanel Orientation="Horizontal">
                         <ui:Button Grid.Column="0" Width="150" Height="50" Margin="0, 0, 0, 10"
                             Content="Read All" Foreground="White" Background="YellowGreen"
-                            HorizontalAlignment="Center"></ui:Button>
+                            HorizontalAlignment="Center" Command="{Binding ViewModel.ReadAllDataCommand}"></ui:Button>
                         <ui:Button Grid.Column="1" Width="150" Height="50" Margin="0, 0, 0, 10"
-                            Content="Read All" Foreground="White" Background="YellowGreen"
+                            Content="Read" Foreground="White" Background="YellowGreen"
                             HorizontalAlignment="Center"></ui:Button>
                     </StackPanel>
                 </Grid>
