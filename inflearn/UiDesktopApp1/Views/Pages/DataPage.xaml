@@ -50,7 +50,9 @@
                     <Run Text="Administrative Agency "/>
                     <Run Text="*" Foreground="OrangeRed"/>
                 </ui:TextBlock>
-                <ComboBox x:Name="cbxAdminAgency" ItemsSource="{Binding ViewModel.Colors}" Margin="0,0,0,10"/>
+                <ComboBox x:Name="cbxAdminAgency" SelectedItem="{Binding ViewModel.SelectedAdministrativeAgency, Mode=TwoWay}"
+                          ItemsSource="{Binding ViewModel.AdministrativeAgency, Mode=TwoWay}" Margin="0,0,0,10"
+                          SelectionChanged="cbxAdminAgency_SelectionChanged" />
 
                 <ui:TextBlock x:Name="tblkTotalPopulation" Margin="0,0,0,10">
                     <Run Text="Total Population "/>
@@ -88,7 +90,7 @@
                 </ui:TextBlock>
                 <ui:TextBox x:Name="tbxNumOfPPHouseolds" Margin="0,0,0,10"></ui:TextBox>
 
-                <ui:Button Height="50" Width="300" Background="SteelBlue" 
+                <ui:Button Height="50" Width="300" Background="SteelBlue" Command="{Binding ViewModel.SelectedAdministrativeAgencyCommand, Mode=OneWay}"
                            Content="Create" Foreground="White" Margin="0, 0, 0, 10"/>
 
                 <Grid>
@@ -116,7 +118,7 @@
         </Grid>
 
         <Grid Grid.Column="1">
-
+            <DataGrid x:Name="dgGangnamguPopulation" ItemsSource="{Binding ViewModel.GangnamguPopulations, Mode=OneWay}"/>
         </Grid>
     </Grid>
 </Page>

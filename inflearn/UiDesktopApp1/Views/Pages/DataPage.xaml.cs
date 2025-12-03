@@ -14,5 +14,10 @@ namespace UiDesktopApp1.Views.Pages
 
             InitializeComponent();
         }
+
+        private void cbxAdminAgency_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
