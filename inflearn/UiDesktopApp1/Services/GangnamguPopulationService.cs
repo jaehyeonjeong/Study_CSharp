@@ -32,6 +32,7 @@ namespace UiDesktopApp1.Services
             if (validData != null)
             {
                 this._projectDatabaseContext?.GangnamguPopulations.Remove(validData);
+                this._projectDatabaseContext?.SaveChanges();
             }
             else
             {
