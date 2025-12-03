@@ -14,7 +14,7 @@ namespace UiDesktopApp1.Interface
         List<T>? GetDataBaseTable();   //Null able
 
         // 테이블에 대해 특정 ID에 해당하는 데이터 조회
-        T? GetDetail(int id);   //Null able
+        T? GetDetail(int? id);   //Null able
 
         // 테이블에 특정 DATA INSERT
         void InsertDB(T entity);
@@ -23,6 +23,6 @@ namespace UiDesktopApp1.Interface
         void UpdateDB(T entity);
 
         // 테이블에 특정 DATA DELTETE
-        void DeleteDB(int id);
+        void DeleteDB(int? id);
     }
 }

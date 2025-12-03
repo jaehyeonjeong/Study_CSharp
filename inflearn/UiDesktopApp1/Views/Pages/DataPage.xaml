@@ -47,9 +47,17 @@
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
                 <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
             </Grid.RowDefinitions>
 
             <StackPanel Orientation="Vertical">
+                <ui:TextBlock x:Name="tblkId" Margin="0,0,0,10">
+                    <Run Text="Id"/>
+                    <Run Text="*" Foreground="OrangeRed"/>
+                </ui:TextBlock>
+                <ui:NumberBox x:Name="tbxId" Margin="0,0,0,10"
+                     Text="{Binding ViewModel.SelectedId, Mode=TwoWay}"></ui:NumberBox>
+
                 <ui:TextBlock x:Name="tblkAdminAgency" Margin="0,0,0,10">
                     <Run Text="Administrative Agency "/>
                     <Run Text="*" Foreground="OrangeRed"/>
@@ -116,14 +124,14 @@
                             HorizontalAlignment="Center" Command="{Binding ViewModel.ReadAllDataCommand}"></ui:Button>
                         <ui:Button Grid.Column="1" Width="150" Height="50" Margin="0, 0, 0, 10"
                             Content="Read" Foreground="White" Background="YellowGreen"
-                            HorizontalAlignment="Center"></ui:Button>
+                            HorizontalAlignment="Center" Command="{Binding ViewModel.ReadDetailDataCommand}"></ui:Button>
                     </StackPanel>
                 </Grid>
 
-                <ui:Button Height="50" Width="300" Background="Bisque"
+                <ui:Button Height="50" Width="300" Background="Bisque" Command="{Binding ViewModel.UpdateDataCommand}"
                     Content="Update" Foreground="Black" Margin="0, 0, 0, 10"/>
 
-                <ui:Button Height="50" Width="300" Background="IndianRed"
+                <ui:Button Height="50" Width="300" Background="IndianRed" Command="{Binding ViewModel.DeleteDataCommand}"
                     Content="Delete" Foreground="White" Margin="0, 0, 0, 10"/>
             </StackPanel>
         </Grid>

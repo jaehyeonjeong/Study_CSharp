@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Media;
+using System.Xml.Serialization;
 using UiDesktopApp1.Interface;
 using UiDesktopApp1.Models;
 using Wpf.Ui.Abstractions.Controls;
@@ -42,6 +43,9 @@ namespace UiDesktopApp1.ViewModels.Pages
 
         [ObservableProperty]
         private double? _selectedNumberOfPeoplePerHouseholds;
+
+        [ObservableProperty]
+        private int? _selectedId;
         #endregion
 
         #region CONSTRUCTOR
@@ -73,13 +77,54 @@ namespace UiDesktopApp1.ViewModels.Pages
             gangnamguPopulation.SexRatio = this.SelectedSexRatio;
             gangnamguPopulation.NumberOfHouseholds = this.SelectedNumberOfHouseholds;
             gangnamguPopulation.NumberOfPeoplePerHousehold = this.SelectedNumberOfPeoplePerHouseholds;
+
+            // Id 값은 넣지 않아도 되는 이유는 Service에서 Id 값 자동 증가로 처리
             this._population?.InsertDB(gangnamguPopulation);
         }
 
         [RelayCommand]
-        private void ReadAllData()
+        private void ReadAllData()      // 전체 데이터 읽어오기
         {
             this.GangnamguPopulations = this._population?.GetDataBaseTable();
+        }
+
+        [RelayCommand]
+        private void ReadDetailData()
+        {
+            // 데이터를 찾을 때 1칸씩 밀리기 때문에 PostgreSQL 표기에 맞게 처리
+            var targetData = this._population?.GetDetail(this.SelectedId);
+
+            this.SelectedAdministrativeAgency = targetData?.AdministrativeAgency;
+            this.SelectedTotalPopulation = targetData?.TotalPopulation;
+            this.SelectedMalePopulation = targetData?.MalePopulation;
+            this.SelectedFeMalePopulation = targetData?.FemalePopulation;
+            this.SelectedSexRatio = targetData?.SexRatio;
+            this.SelectedNumberOfHouseholds = targetData?.NumberOfHouseholds;
+            this.SelectedNumberOfPeoplePerHouseholds = targetData?.NumberOfPeoplePerHousehold;
+
+        }
+
+        [RelayCommand]
+        private void UpdateData() // 데이터 업데이트
+        {
+            var targetData = this._population?.GetDetail(this.SelectedId);
+
+            // PostgreSQL에서 성의한 TotalPopulation에 
+            targetData.AdministrativeAgency = this.SelectedAdministrativeAgency;
+            targetData.TotalPopulation = this.SelectedTotalPopulation;
+            targetData.MalePopulation = this.SelectedMalePopulation;
+            targetData.FemalePopulation = this.SelectedFeMalePopulation;
+            targetData.SexRatio = this.SelectedSexRatio;
+            targetData.NumberOfHouseholds = this.SelectedNumberOfHouseholds;
+            targetData.NumberOfPeoplePerHousehold = this.SelectedNumberOfPeoplePerHouseholds;
+
+            this._population?.UpdateDB(targetData);
+        }
+
+        [RelayCommand]
+        public void DeleteData()
+        {
+            this._population?.DeleteDB(this.SelectedId);
         }
         #endregion
 

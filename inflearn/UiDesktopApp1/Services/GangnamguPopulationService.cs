@@ -24,7 +24,7 @@ namespace UiDesktopApp1.Services
             return this._projectDatabaseContext?.GangnamguPopulations.ToList();
         }
 
-        public void DeleteDB(int id)
+        public void DeleteDB(int? id)
         {
             // id 에 해당하는 녀석이 있는지 확인
             var validData = this._projectDatabaseContext?.GangnamguPopulations.FirstOrDefault(c=> c.Id == id);
@@ -39,7 +39,7 @@ namespace UiDesktopApp1.Services
             }
         }
 
-        public GangnamguPopulation? GetDetail(int id)
+        public GangnamguPopulation? GetDetail(int? id)
         {
             var validData = this._projectDatabaseContext?.GangnamguPopulations.FirstOrDefault(c=>c.Id == id);
             if (validData != null)
