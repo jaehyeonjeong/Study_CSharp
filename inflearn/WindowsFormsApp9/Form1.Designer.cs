@@ -28,13 +28,52 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.uc1 = new WindowsFormsApp9.UserControl1();
+            this.uc2 = new WindowsFormsApp9.UserControl1();
+            this.uc3 = new WindowsFormsApp9.UserControl1();
+            this.SuspendLayout();
+            // 
+            // uc1
+            // 
+            this.uc1.Location = new System.Drawing.Point(0, 0);
+            this.uc1.Name = "uc1";
+            this.uc1.Size = new System.Drawing.Size(898, 178);
+            this.uc1.TabIndex = 0;
+            // 
+            // uc2
+            // 
+            this.uc2.Location = new System.Drawing.Point(0, 184);
+            this.uc2.Name = "uc2";
+            this.uc2.Size = new System.Drawing.Size(898, 178);
+            this.uc2.TabIndex = 1;
+            // 
+            // uc3
+            // 
+            this.uc3.Location = new System.Drawing.Point(0, 368);
+            this.uc3.Name = "uc3";
+            this.uc3.Size = new System.Drawing.Size(898, 178);
+            this.uc3.TabIndex = 2;
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(940, 580);
+            this.Controls.Add(this.uc3);
+            this.Controls.Add(this.uc2);
+            this.Controls.Add(this.uc1);
+            this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private UserControl1 uc1;
+        private UserControl1 uc2;
+        private UserControl1 uc3;
     }
 }
 
