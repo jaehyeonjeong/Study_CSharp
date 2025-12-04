@@ -22,7 +22,7 @@ namespace UiDesktopApp1.Views.Pages
         private void ViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             // 코드 비하인드에서는 이 함수 호출 됨으로써 어떤 값들이 변경되었는지 확인 가능
-            switch(e.PropertyName)  // 바인딩 이름
+            switch (e.PropertyName)  // 바인딩 이름
             {
                 case "Text01": // Text01 로 바인딩 된 버튼
                     // UI 컴트롤에 대한 변경이 코드비하인드에 들어갈 수 있음

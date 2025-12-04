@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace UiDesktopApp1.Models;
+﻿namespace UiDesktopApp1.Models;
 
 public partial class GangnamguPopulation
 {

@@ -30,7 +30,7 @@ namespace UiDesktopApp1.ViewModels.Pages
         public DashboardViewModel(IDateTime dateTime, IDatabase<GangnamguPopulation> database)   // 인터페이스 파라미터 주입  
         {
             this._iDateTime = dateTime;
-            
+
             this._iDatabase = database;
         }
 
@@ -41,7 +41,7 @@ namespace UiDesktopApp1.ViewModels.Pages
 
         [ObservableProperty]
         private string? _text02 = string.Empty;
-        
+
 
         // Integer 속성의 Observable Property 파라미터
         [ObservableProperty]

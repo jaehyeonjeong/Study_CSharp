@@ -1,7 +1,4 @@
-﻿using System.Threading.Tasks;
-using System.Windows.Media;
-using System.Xml.Serialization;
-using UiDesktopApp1.Interface;
+﻿using UiDesktopApp1.Interface;
 using UiDesktopApp1.Models;
 using Wpf.Ui.Abstractions.Controls;
 

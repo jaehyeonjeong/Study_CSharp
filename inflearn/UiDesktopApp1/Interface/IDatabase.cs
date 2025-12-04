@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UiDesktopApp1.Models;
-
-namespace UiDesktopApp1.Interface
+﻿namespace UiDesktopApp1.Interface
 {
     public interface IDatabase<T>      // 템플릿 T를 구현함으로 DB의 컬럼이 추가되더라도 가변성 있게 데이터를 출력
     {

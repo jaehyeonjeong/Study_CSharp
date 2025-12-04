@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using UiDesktopApp1.Views.Pages;
+﻿using Microsoft.Extensions.Hosting;
 using UiDesktopApp1.Views.Windows;
 using Wpf.Ui;
 
