@@ -7,10 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsLogin.Feature.Base;
 
 namespace WindowsFormsLogin.Feature.Login
 {
-    public interface ILoginView
+    public interface ILoginView : IView
     {
         // 델리데이트 호출 구문
         event Action OnLogin;
@@ -18,9 +19,6 @@ namespace WindowsFormsLogin.Feature.Login
         // 인터페이스에 들어갈 속성
         string UserId { get; set; }
         string Password { get; set; }
-
-        // 인터페이스에 직접 구현
-        void SendMessage(string message); // Presenter 에서 호출하여 인터페이스에 직접 도달
     }
     public partial class LoginView : Form, ILoginView
     {
@@ -35,12 +33,18 @@ namespace WindowsFormsLogin.Feature.Login
         // 델리데이트 이벤트 구현
         public event Action OnLogin = default; // null 허용
 
-        public void SendMessage(string message) // .NET Framework에서는 인터페이스에 직접 구현 불가
+        // Trim()은 비밀번호에 사용하지 않음, 공백도 유효한 비밀번호일 수 있으므로
+        private void btnLogin_Click(object sender, EventArgs e) => OnLogin?.Invoke(); // null 조건부 연산자 사용, PRESENTER에게 알림
+
+        // IView 인터페이스 구현 .NetFramework환경에선 직접  상속받아 구현
+        public void ShowMessage(string message)
         {
             MessageBox.Show(message);
         }
 
-        // Trim()은 비밀번호에 사용하지 않음, 공백도 유효한 비밀번호일 수 있으므로
-        private void btnLogin_Click(object sender, EventArgs e) => OnLogin?.Invoke(); // null 조건부 연산자 사용, PRESENTER에게 알림
+        public DialogResult ShowDialog(string name, string caption, MessageBoxButtons buttons)
+        {
+            return MessageBox.Show(name, caption, buttons);
+        }
     }
 }

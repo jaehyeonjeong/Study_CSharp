@@ -61,6 +61,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Feature\Base\PresenterBase.cs" />
+    <Compile Include="Feature\Base\IView.cs" />
     <Compile Include="Feature\Login\LoginPresenter.cs" />
     <Compile Include="Feature\Login\LoginView.cs">
       <SubType>Form</SubType>
@@ -70,6 +72,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIHandler\IPresenterFactory.cs" />
     <EmbeddedResource Include="Feature\Login\LoginView.resx">
       <DependentUpon>LoginView.cs</DependentUpon>
     </EmbeddedResource>
