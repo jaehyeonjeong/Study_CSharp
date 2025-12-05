@@ -72,6 +72,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIHandler\FormHandler.cs" />
     <Compile Include="UIHandler\IPresenterFactory.cs" />
     <EmbeddedResource Include="Feature\Login\LoginView.resx">
       <DependentUpon>LoginView.cs</DependentUpon>
