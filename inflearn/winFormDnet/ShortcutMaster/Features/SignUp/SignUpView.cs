@@ -13,7 +13,16 @@ namespace ShortcutMaster.Features.SignUp
 {
     public interface ISignUpView : IView
     {
+        event Action OnUserIdChanged;
+        event Action OnUserPwChanged;
+        event Action OnUserPwCornFirmChanged;
+        event Action OnUserEmailChanged;
+        event Action OnSignUpClicked;
 
+        string UserId { get; set; }
+        string Password { get; set; }
+        string ConfirmPassword { get; }
+        string Email { get; }
     }
     public partial class SignUpView : Form, ISignUpView
     {
@@ -21,5 +30,25 @@ namespace ShortcutMaster.Features.SignUp
         {
             InitializeComponent();
         }
+
+        public string UserId { get => txtId.Text.Trim().ToLower(); set => txtId.Text = value; }
+
+        public string Password { get => txtPw.Text; set => txtPw.Text = value; }
+
+        public string ConfirmPassword => txtPwConFirm.Text;
+
+        public string Email => txtEmail.Text.ToLower().Trim();
+
+        public event Action OnUserIdChanged = default!;
+        public event Action OnUserPwChanged = default!;
+        public event Action OnUserPwCornFirmChanged = default!;
+        public event Action OnUserEmailChanged = default!;
+        public event Action OnSignUpClicked = default!;
+
+        private void txtId_TextChanged(object sender, EventArgs e) => OnUserIdChanged?.Invoke();
+        private void txtPw_TextChanged(object sender, EventArgs e) => OnUserPwChanged?.Invoke();
+        private void txtPwConFirm_TextChanged(object sender, EventArgs e) => OnUserPwCornFirmChanged?.Invoke();
+        private void txtEmail_TextChanged(object sender, EventArgs e) => OnUserEmailChanged?.Invoke();
+        private void btnSignUp_Click(object sender, EventArgs e)=>OnSignUpClicked?.Invoke();
     }
 }

@@ -78,12 +78,16 @@
     <Compile Include="Feature\SignUp\SignUpView.Designer.cs">
       <DependentUpon>SignUpView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Feature\SignUp\SignUpViewModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UIHandler\FormHandler.cs" />
     <Compile Include="UIHandler\PresenterFactory.cs" />
     <EmbeddedResource Include="Feature\Login\LoginView.resx">
       <DependentUpon>LoginView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Feature\SignUp\SignUpView.resx">
+      <DependentUpon>SignUpView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
