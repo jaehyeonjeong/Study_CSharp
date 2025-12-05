@@ -8,12 +8,11 @@ namespace WindowsFormsLogin.Feature.Login
 {
     public class LoginPresenter
     {
-        private ILoginView _loginView;
+        private ILoginView _loginView = default; // null 허용
 
-        // 생성자
-        public LoginPresenter(ILoginView loginView) // 매개 변수 생성
+        internal void SetView(LoginView loginView)
         {
-            this._loginView = loginView;
+            _loginView = loginView;
             _loginView.OnLogin += _view_OnLogin; // 델리게이트 이벤트 구독, 이벤트 핸들러 메서드 연결
         }
 

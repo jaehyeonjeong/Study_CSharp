@@ -8,11 +8,11 @@ namespace ShortcutMaster.Features.Login
 {
     public class LoginPresenter
     {
-        private ILoginView _loginView;
+        private ILoginView _loginView = default!;
 
-        public LoginPresenter(ILoginView loginView) // 매개 변수 생성
+        internal void SetView(ILoginView loginView) // LoginView 클래스 대신 interface 사용
         {
-            this._loginView = loginView;
+            _loginView = loginView;
             _loginView.OnLogin += _view_OnLogin; // 델리게이트 이벤트 구독, 이벤트 핸들러 메서드 연결
         }
 
