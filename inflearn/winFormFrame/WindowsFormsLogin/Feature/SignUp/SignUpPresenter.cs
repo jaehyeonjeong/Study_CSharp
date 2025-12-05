@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -28,7 +29,23 @@ namespace WindowsFormsLogin.Feature.SignUp
 
         private void View_OnSignUpClicked()
         {
-            throw new NotImplementedException();
+            // .NetFramework만의 Valid 검증 방법
+            var context = new ValidationContext(_viewModel, serviceProvider: null, items: null);
+            var results = new List<ValidationResult>();
+
+            bool isValid = Validator.TryValidateObject(_viewModel, context, results, validateAllProperties: true);
+
+            if (!isValid)
+            {
+                // 여러 에러 메시지를 합쳐서 출력
+                string errorMessages = string.Join("\n", results.Select(r => r.ErrorMessage));
+                View.ShowMessage(errorMessages);
+            }
+            else
+            {
+                View.ShowMessage("회원가입 검증 성공!");
+                // 실제 회원가입 로직 실행
+            }
         }
 
         private void View_OnUserEmailChanged()

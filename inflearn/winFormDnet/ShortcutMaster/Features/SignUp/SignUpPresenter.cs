@@ -1,4 +1,5 @@
-﻿using ShortcutMaster.Features.Base;
+﻿using FluentValidation;
+using ShortcutMaster.Features.Base;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,7 +27,17 @@ namespace ShortcutMaster.Features.SignUp
 
         private void View_OnSignUpClicked()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var validator = new SignUpViewModelValidator();
+                validator.ValidateAndThrow(_viewModel);
+            }
+            catch (ValidationException e)
+            {
+                //View.ShowMessage(e.Errors.First().ErrorMessage);
+                View.ShowMessage(string.Join("\n", e.Errors.Select(err => err.ErrorMessage)));
+                //View.ShowMessage(e.Message);
+            }
         }
 
         private void View_OnUserEmailChanged()
