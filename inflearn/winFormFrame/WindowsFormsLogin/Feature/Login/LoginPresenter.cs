@@ -8,7 +8,7 @@ namespace WindowsFormsLogin.Feature.Login
 {
     public class LoginPresenter
     {
-        private ILoginView _loginView = default; // null 허용
+        private ILoginView _loginView = default; // 기본값은 null
 
         internal void SetView(LoginView loginView)
         {

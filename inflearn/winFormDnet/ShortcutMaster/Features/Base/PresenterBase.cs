@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ShortcutMaster.Features.Base
+{
+    public abstract class PresenterBase <TView> 
+        where TView : IView // 제네릭 타입 TView는 IView 인터페이스를 구현해야 함
+    {
+        // 단일 추상화 클래스 구현
+        public TView View { get; private set; } = default!; // 뷰 속성, 외부에서 설정 불가
+
+        public void SetView(TView view) // 뷰 설정 메서드
+        {
+            View = view;
+        }
+
+        public virtual void Initialize() // 초기화 메서드, 필요시 오버라이드 가능
+        {
+        }
+    }
+}

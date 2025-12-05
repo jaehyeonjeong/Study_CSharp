@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShortcutMaster.Features.Base;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,7 +11,7 @@ using System.Windows.Forms;
 
 namespace ShortcutMaster.Features.Login
 {
-    public interface ILoginView
+    public interface ILoginView : IView // IView 인터페이스 상속
     {
         // 델리데이트 호출 구문
         event Action OnLogin;
@@ -19,12 +20,9 @@ namespace ShortcutMaster.Features.Login
         string UserId { get; set; } 
         string Password { get; set; }
 
-        // 인터페이스에 직접 구현
-        public void SendMessage(string message) // Presenter 에서 호출하여 인터페이스에 직접 도달
-        {
-            MessageBox.Show(message);
-        }
+        // 이미 있는 로그인 뷰의 속성 및 메서드는 IView에서 상속받아 사용
     }
+
     public partial class LoginView : Form, ILoginView
     {
         public LoginView()

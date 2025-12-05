@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using ShortcutMaster.Features.Login;
+using ShortcutMaster.UIHandler;
 using System.ComponentModel.Design;
 
 namespace ShortcutMaster
@@ -13,6 +14,7 @@ namespace ShortcutMaster
 
             //services.AddTransient<LoginPresenter>(_ => new LoginPresenter(new LoginView()));        // 의존성 주입을 위한 서비스 등록
             services.AddTransient<LoginPresenter>();        // 의존성 주입을 위한 서비스 등록
+            services.AddTransient<IPresenterFactory, PresenterFactory>(); // 프레젠터 팩토리 등록(의존성 주입)
 
             return services.BuildServiceProvider();
         }
@@ -30,11 +32,10 @@ namespace ShortcutMaster
             IServiceProvider serviceProvider = ConfigureServices(); // 서비스 프로바이더 구성
 
             // 컴퓨터 서비스를 이용해서 로케이터 패턴으로 로그인 프레젠터 생성 후 
-            LoginPresenter loginPresenter = serviceProvider.GetRequiredService<LoginPresenter>();   // LoginPresenter 인스턴스 생성
-
-            // 뷰 객체에서 직접 생성
-            LoginView loginView = new LoginView();
-            loginPresenter.SetView(loginView);  // 프레젠터 안에 SetView 메서드로 뷰 설정
+            var presenterFactory = serviceProvider.GetRequiredService<IPresenterFactory>();   // LoginPresenter 인스턴스 생성
+                                                                                              
+            LoginView loginView = new LoginView();  // 뷰 객체에서 직접 생성
+            presenterFactory.Create<ILoginView, LoginPresenter>(loginView);
           
             Application.Run(loginView); // 마지막으로 어플리케이션 실행 
         }
