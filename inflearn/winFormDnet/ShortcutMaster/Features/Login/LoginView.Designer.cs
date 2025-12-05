@@ -88,6 +88,7 @@
             linkSignUp.TabIndex = 5;
             linkSignUp.TabStop = true;
             linkSignUp.Text = "회원가입";
+            linkSignUp.LinkClicked += linkSignUp_LinkClicked;
             // 
             // LoginView
             // 

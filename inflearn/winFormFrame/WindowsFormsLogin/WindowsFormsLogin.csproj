@@ -70,6 +70,13 @@
     <Compile Include="Feature\Login\LoginView.Designer.cs">
       <DependentUpon>LoginView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Feature\SignUp\SignUpPresenter.cs" />
+    <Compile Include="Feature\SignUp\SignUpView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Feature\SignUp\SignUpView.Designer.cs">
+      <DependentUpon>SignUpView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UIHandler\FormHandler.cs" />

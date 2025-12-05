@@ -87,6 +87,7 @@
             this.linkSignUp.TabIndex = 5;
             this.linkSignUp.TabStop = true;
             this.linkSignUp.Text = "회원가입";
+            this.linkSignUp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkSignUp_LinkClicked);
             // 
             // LoginView
             // 

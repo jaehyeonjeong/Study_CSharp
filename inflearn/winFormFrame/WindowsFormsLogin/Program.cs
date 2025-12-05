@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsLogin.Feature.Login;
+using WindowsFormsLogin.Feature.SignUp;
 using WindowsFormsLogin.UIHandler;
 
 namespace WindowsFormsLogin
@@ -16,7 +17,9 @@ namespace WindowsFormsLogin
         {
             IServiceCollection services = new ServiceCollection();
 
+            // Presenters
             services.AddTransient<LoginPresenter>();
+            services.AddTransient<SignUpPresenter>();
 
             // UIHandler, Singleton : 하나의 인스턴스만 생성, Transient : 요청할 때마다 새 인스턴스 생성
             services.AddSingleton<IFormHandler, FormHandler>();

@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using ShortcutMaster.Features.Login;
+using ShortcutMaster.Features.SignUp;
 using ShortcutMaster.UIHandler;
 using System.ComponentModel.Design;
 
@@ -12,8 +13,9 @@ namespace ShortcutMaster
         {
             IServiceCollection services = new ServiceCollection();
 
-            //services.AddTransient<LoginPresenter>(_ => new LoginPresenter(new LoginView()));        // 의존성 주입을 위한 서비스 등록
-            services.AddTransient<LoginPresenter>();        
+            // Presenters
+            services.AddTransient<LoginPresenter>();
+            services.AddTransient<SignUpPresenter>();
 
             // UIHandler
             services.AddSingleton<IFormHandler, FormHandler>();

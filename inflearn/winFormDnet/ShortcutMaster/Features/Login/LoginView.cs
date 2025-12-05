@@ -15,6 +15,7 @@ namespace ShortcutMaster.Features.Login
     {
         // 델리데이트 호출 구문
         event Action OnLogin;
+        event Action OnToSignUp;
 
         // 인터페이스에 들어갈 속성
         string UserId { get; set; } 
@@ -35,9 +36,12 @@ namespace ShortcutMaster.Features.Login
 
         // 델리데이트 이벤트 구현
         public event Action OnLogin = default!; // null 허용
+        public event Action OnToSignUp = default!;
 
-        // Trim()은 비밀번호에 사용하지 않음, 공백도 유효한 비밀번호일 수 있으므로
+
+        // Invoke : 델리게이트(delegate)나 이벤트(event)를 실행(호출)
         private void btnLogin_Click(object sender, EventArgs e) => OnLogin?.Invoke(); // null 조건부 연산자 사용, PRESENTER에게 알림
 
+        private void linkSignUp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)=> OnToSignUp?.Invoke(); 
     }
 }
