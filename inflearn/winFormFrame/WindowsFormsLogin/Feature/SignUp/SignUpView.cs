@@ -21,15 +21,15 @@ namespace WindowsFormsLogin.Feature.SignUp
             InitializeComponent();
         }
 
-        // .NetFramework의 한계
-        public DialogResult ShowDialog(string name, string caption, MessageBoxButtons buttons)
-        {
-            throw new NotImplementedException();
-        }
-
+        // .NetFramework의 한계.. 인터페이스 내부 선언 불가
         public void ShowMessage(string message)
         {
-            throw new NotImplementedException();
+            MessageBox.Show(message);
+        }
+
+        public DialogResult ShowDialog(string name, string caption, MessageBoxButtons buttons)
+        {
+            return MessageBox.Show(name, caption, buttons);
         }
     }
 }

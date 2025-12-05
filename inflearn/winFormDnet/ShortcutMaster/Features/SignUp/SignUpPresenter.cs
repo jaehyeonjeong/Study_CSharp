@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace ShortcutMaster.Features.SignUp
 {
-    public class SignUpPresenter : PresenterBase<ISignUpView>
+    public class SignUpPresenter : PresenterBase<ISignUpView, SignUpArgs>
     {
-        public override void Initialize()
+        public override void Initialize(SignUpArgs args)
         {
+            View.ShowMessage($"UserId : {args.UserId}, Password : {args.Password}");
         }
     }
 }

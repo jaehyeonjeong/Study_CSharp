@@ -7,10 +7,11 @@ using WindowsFormsLogin.Feature.Base;
 
 namespace WindowsFormsLogin.Feature.SignUp
 {
-    public class SignUpPresenter : PresenterBase<ISignUpView>
+    public class SignUpPresenter : PresenterBase<ISignUpView, SignUpArgs>
     {
-        public override void Initialize()
+        public override void Initialize(SignUpArgs args)
         {
+            View.ShowMessage($"UserID : {args.UserId}, Password : {args.Password}");
         }
     }
 }

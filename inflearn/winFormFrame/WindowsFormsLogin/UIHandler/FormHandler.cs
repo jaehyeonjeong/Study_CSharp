@@ -11,7 +11,7 @@ namespace WindowsFormsLogin.UIHandler
     public interface IFormHandler
     {
         LoginView CreateLoginView();
-        void ShowSignUpView();
+        void ShowSignUpView(SignUpArgs args);
     }
     public class FormHandler : IFormHandler
     {
@@ -30,10 +30,10 @@ namespace WindowsFormsLogin.UIHandler
             return loginView;
         }
 
-        public void ShowSignUpView()
+        public void ShowSignUpView(SignUpArgs args)
         {
             SignUpView signUpView = new SignUpView();
-            _presenterFactory.Create<ISignUpView, SignUpPresenter>(signUpView);
+            _presenterFactory.Create<ISignUpView, SignUpPresenter, SignUpArgs>(signUpView, args);
             signUpView.ShowDialog();
             signUpView.Dispose();
         }

@@ -12,7 +12,7 @@ namespace ShortcutMaster.UIHandler
     public interface IFormHandler
     {
         LoginView CreateLoginView();
-        void ShowSignUpView();
+        void ShowSignUpView(SignUpArgs args);
     }
 
     public class FormHandler : IFormHandler
@@ -34,10 +34,10 @@ namespace ShortcutMaster.UIHandler
             return loginView;
         }
 
-        public void ShowSignUpView()    // 회원가입 프레젠터 생성
+        public void ShowSignUpView(SignUpArgs args)    // 회원가입 프레젠터 생성
         {
             SignUpView signUpView = new SignUpView();
-            _presenterFactory.Create<ISignUpView, SignUpPresenter>(signUpView);
+            _presenterFactory.Create<ISignUpView, SignUpPresenter, SignUpArgs>(signUpView, args);
             signUpView.ShowDialog();    // 최상단 다이얼로그 생성
             signUpView.Dispose();       // 폼이 종료 되면 폼의 메모리가 바로 떨어지지 않기 때문에 dispose 선언
         }

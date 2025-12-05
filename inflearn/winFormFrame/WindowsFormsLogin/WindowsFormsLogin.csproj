@@ -70,6 +70,7 @@
     <Compile Include="Feature\Login\LoginView.Designer.cs">
       <DependentUpon>LoginView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Feature\SignUp\SignUpArgs.cs" />
     <Compile Include="Feature\SignUp\SignUpPresenter.cs" />
     <Compile Include="Feature\SignUp\SignUpView.cs">
       <SubType>Form</SubType>
@@ -80,7 +81,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UIHandler\FormHandler.cs" />
-    <Compile Include="UIHandler\IPresenterFactory.cs" />
+    <Compile Include="UIHandler\PresenterFactory.cs" />
     <EmbeddedResource Include="Feature\Login\LoginView.resx">
       <DependentUpon>LoginView.cs</DependentUpon>
     </EmbeddedResource>

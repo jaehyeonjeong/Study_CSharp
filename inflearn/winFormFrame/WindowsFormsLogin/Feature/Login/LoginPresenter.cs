@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using WindowsFormsLogin.Feature.Base;
+using WindowsFormsLogin.Feature.SignUp;
 using WindowsFormsLogin.UIHandler;
 
 namespace WindowsFormsLogin.Feature.Login
@@ -25,7 +27,7 @@ namespace WindowsFormsLogin.Feature.Login
 
         private void View_OnSignUp()
         {
-            _formHandler.ShowSignUpView();
+            _formHandler.ShowSignUpView(new SignUpArgs { UserId = View.UserId, Password = View.Password });
         }
 
         private void View_OnLogin()    // View에서 Present로 호출되는 구간

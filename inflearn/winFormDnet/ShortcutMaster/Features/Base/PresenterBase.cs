@@ -21,4 +21,12 @@ namespace ShortcutMaster.Features.Base
         {
         }
     }
+
+    public abstract class PresenterBase<TView,TArgs> : PresenterBase<TView>
+        where TView : IView     // 상속한 클래스에 where 조건 동일 
+        where TArgs : class     
+    {
+        // 클래스를 사용한다는건 반드시 인자가 존재해야 됨
+        public abstract void Initialize(TArgs args);    // 단일 추상화
+    }    
 }

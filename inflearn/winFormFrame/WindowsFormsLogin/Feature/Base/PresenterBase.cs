@@ -20,4 +20,11 @@ namespace WindowsFormsLogin.Feature.Base
         {
         }   
     }
+
+    public abstract class PresenterBase<TView, TArgs> : PresenterBase<TView>
+        where TView : IView
+        where TArgs : class
+    {
+        public abstract void Initialize(TArgs args);
+    }
 }

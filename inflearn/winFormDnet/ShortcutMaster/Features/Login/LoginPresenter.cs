@@ -1,4 +1,5 @@
 ﻿using ShortcutMaster.Features.Base;
+using ShortcutMaster.Features.SignUp;
 using ShortcutMaster.UIHandler;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace ShortcutMaster.Features.Login
 
         private void View_OnToSignUp()
         {
-            _formHandler.ShowSignUpView();
+            _formHandler.ShowSignUpView(new SignUpArgs { UserId = View.UserId, Password = View.Password });
         }
 
         private void View_OnLogin()    // View에서 Present로 호출되는 구간
