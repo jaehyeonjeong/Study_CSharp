@@ -1,3 +1,4 @@
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using ShortcutMaster.Features.Login;
 using ShortcutMaster.Features.SignUp;
@@ -12,6 +13,9 @@ namespace ShortcutMaster
         static IServiceProvider ConfigureServices()  
         {
             IServiceCollection services = new ServiceCollection();
+
+            // Validators
+            services.AddTransient<IValidator<SignUpViewModel>, SignUpViewModelValidator>();
 
             // Presenters
             services.AddTransient<LoginPresenter>();

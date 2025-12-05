@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ShortcutMaster.Features.SignUp
 {
-    public class SignUpPresenter : PresenterBase<ISignUpView, SignUpArgs>
+    public class SignUpPresenter(IValidator<SignUpViewModel> _validator) : PresenterBase<ISignUpView, SignUpArgs>
     {
         private SignUpViewModel _viewModel = new();
 
@@ -29,8 +29,7 @@ namespace ShortcutMaster.Features.SignUp
         {
             try
             {
-                var validator = new SignUpViewModelValidator();
-                validator.ValidateAndThrow(_viewModel);
+                _validator.ValidateAndThrow(_viewModel);
             }
             catch (ValidationException e)
             {
