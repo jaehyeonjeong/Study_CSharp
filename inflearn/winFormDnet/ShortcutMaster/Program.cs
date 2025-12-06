@@ -1,6 +1,8 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using ShortcutMaster.Configs;
 using ShortcutMaster.Features.Login;
 using ShortcutMaster.Features.SignUp;
 using ShortcutMaster.UIHandler;
@@ -12,6 +14,10 @@ namespace ShortcutMaster
     {
         private static void ConfigureServices(HostBuilderContext context, IServiceCollection services)
         {
+            // Configuration
+            services.Configure<AppSettings>(context.Configuration);
+            services.AddSingleton<IAppSettings>(s => s.GetRequiredService<IOptions<AppSettings>>().Value); // Configuration 의존성 주입
+
             // Validators
             services.AddTransient<IValidator<SignUpViewModel>, SignUpViewModelValidator>();
 

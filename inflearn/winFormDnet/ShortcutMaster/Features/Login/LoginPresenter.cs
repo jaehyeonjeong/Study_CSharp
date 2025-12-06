@@ -1,8 +1,12 @@
-﻿using ShortcutMaster.Features.Base;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using ShortcutMaster.Configs;
+using ShortcutMaster.Features.Base;
 using ShortcutMaster.Features.SignUp;
 using ShortcutMaster.UIHandler;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,8 +17,9 @@ namespace ShortcutMaster.Features.Login
     {
         private readonly IFormHandler _formHandler;
 
-        public LoginPresenter(IFormHandler formHandler)
+        public LoginPresenter(IFormHandler formHandler, IAppSettings appSettings)
         {
+            Debug.Print(appSettings.ConnectionStrings.SQLite);
             this._formHandler = formHandler;
         }
 
