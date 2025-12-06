@@ -1,8 +1,11 @@
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using ShortcutMaster.Configs;
+using ShortcutMaster.Data;
 using ShortcutMaster.Features.Login;
 using ShortcutMaster.Features.SignUp;
 using ShortcutMaster.UIHandler;
@@ -14,6 +17,13 @@ namespace ShortcutMaster
     {
         private static void ConfigureServices(HostBuilderContext context, IServiceCollection services)
         {
+            // DbContext
+            services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseSqlite(context.Configuration.GetConnectionString("SQLite")); // json에서 만들어진 ConnectionString get
+            });
+
+
             // Configuration
             services.Configure<AppSettings>(context.Configuration);
             services.AddSingleton<IAppSettings>(s => s.GetRequiredService<IOptions<AppSettings>>().Value); // Configuration 의존성 주입
