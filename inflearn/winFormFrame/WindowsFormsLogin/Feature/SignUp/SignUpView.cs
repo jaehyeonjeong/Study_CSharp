@@ -23,6 +23,8 @@ namespace WindowsFormsLogin.Feature.SignUp
         string Password { get; set; }
         string ConfirmPassword { get; }
         string Email { get; }
+
+        void FocusTextBox(string propertyName);
     }  
     public partial class SignUpView : Form, ISignUpView
     {
@@ -64,5 +66,24 @@ namespace WindowsFormsLogin.Feature.SignUp
         private void txtEmail_TextChanged(object sender, EventArgs e) => OnUserEmailChanged?.Invoke();
 
         private void button1_Click(object sender, EventArgs e) => OnSignUpClicked?.Invoke();
+
+        public void FocusTextBox(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case nameof(SignUpViewModel.UserId):
+                    txtId.Focus(); 
+                    break;
+                case nameof(SignUpViewModel.Password):
+                    txtPw.Focus();
+                    break;
+                case nameof(SignUpViewModel.ConfirmPassword):
+                    txtPwCornFirm.Focus();
+                    break;
+                case nameof(SignUpViewModel.Email):
+                    txtEmail.Focus();
+                    break;
+            }
+        }
     }
 }

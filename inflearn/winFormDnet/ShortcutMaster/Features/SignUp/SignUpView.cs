@@ -23,6 +23,8 @@ namespace ShortcutMaster.Features.SignUp
         string Password { get; set; }
         string ConfirmPassword { get; }
         string Email { get; }
+
+        void FocusTextBox(string propertyName);
     }
     public partial class SignUpView : Form, ISignUpView
     {
@@ -50,5 +52,25 @@ namespace ShortcutMaster.Features.SignUp
         private void txtPwConFirm_TextChanged(object sender, EventArgs e) => OnUserPwCornFirmChanged?.Invoke();
         private void txtEmail_TextChanged(object sender, EventArgs e) => OnUserEmailChanged?.Invoke();
         private void btnSignUp_Click(object sender, EventArgs e)=>OnSignUpClicked?.Invoke();
+
+        public void FocusTextBox(string propertyName)
+        {
+            // switch 안에 case가 리터럴 타입을 좋지 않음
+            switch (propertyName)
+            {
+                case nameof(SignUpViewModel.UserId):
+                    txtId.Focus();
+                    break;
+                case nameof(SignUpViewModel.Password):
+                    txtPw.Focus();
+                    break;
+                case nameof(SignUpViewModel.ConfirmPassword):
+                    txtPwConFirm.Focus();
+                    break;
+                case nameof(SignUpViewModel.Email):
+                    txtEmail.Focus();
+                    break;
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentValidation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
@@ -10,7 +11,7 @@ using WindowsFormsLogin.Feature.Base;
 // .NetFramework의 한계점 : record를 수동으로 만들어서 코드 추가가 많아짐
 namespace WindowsFormsLogin.Feature.SignUp
 {
-    public class SignUpPresenter : PresenterBase<ISignUpView, SignUpArgs>
+    public class SignUpPresenter: PresenterBase<ISignUpView, SignUpArgs>
     {
         private SignUpViewModel _viewModel = new SignUpViewModel();
         public override void Initialize(SignUpArgs args)
@@ -29,22 +30,17 @@ namespace WindowsFormsLogin.Feature.SignUp
 
         private void View_OnSignUpClicked()
         {
-            // .NetFramework만의 Valid 검증 방법
-            var context = new ValidationContext(_viewModel, serviceProvider: null, items: null);
-            var results = new List<ValidationResult>();
-
-            bool isValid = Validator.TryValidateObject(_viewModel, context, results, validateAllProperties: true);
-
-            if (!isValid)
+            try
             {
-                // 여러 에러 메시지를 합쳐서 출력
-                string errorMessages = string.Join("\n", results.Select(r => r.ErrorMessage));
-                View.ShowMessage(errorMessages);
+                var validator = new SignUpViewModelValidator();
+                validator.ValidateAndThrow(_viewModel);
             }
-            else
+            catch (FluentValidation.ValidationException e)
             {
-                View.ShowMessage("회원가입 검증 성공!");
-                // 실제 회원가입 로직 실행
+                var error = e.Errors.First();
+                // 포커스를 가져다 줘야 할 속성에서 에러가 나는지 알기 위함
+                View.FocusTextBox(error.PropertyName);
+                View.ShowMessage(error.ErrorMessage);
             }
         }
 

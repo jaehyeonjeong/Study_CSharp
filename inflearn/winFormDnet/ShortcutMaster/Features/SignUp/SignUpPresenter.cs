@@ -33,9 +33,11 @@ namespace ShortcutMaster.Features.SignUp
             }
             catch (ValidationException e)
             {
-                //View.ShowMessage(e.Errors.First().ErrorMessage);
-                View.ShowMessage(string.Join("\n", e.Errors.Select(err => err.ErrorMessage)));
-                //View.ShowMessage(e.Message);
+                var error = e.Errors.First();
+                // 포커스를 가져다 줘야 할 속성에서 에러가 나는지 알기 위함
+                View.FocusTextBox(error.PropertyName);
+                View.ShowMessage(error.ErrorMessage);
+
             }
         }
 
