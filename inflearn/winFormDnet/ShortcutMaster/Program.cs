@@ -15,6 +15,7 @@ namespace ShortcutMaster
 {
     internal static class Program
     {
+        // Singletone은 한번만 생성, AddTransient는 여러번 생성하는 경우
         private static void ConfigureServices(HostBuilderContext context, IServiceCollection services)
         {
             // DbContext
@@ -22,7 +23,7 @@ namespace ShortcutMaster
             {
                 options.UseSqlite(context.Configuration.GetConnectionString("SQLite")); // json에서 만들어진 ConnectionString get
             });
-
+            //services.AddSingleton(typeof(IUnitOfWorkFactory<>), typeof(UnitOfWorkFactory<>)); // 제네릭 타입 의존성 주입
 
             // Configuration
             services.Configure<AppSettings>(context.Configuration);
