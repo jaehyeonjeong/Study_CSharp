@@ -37,6 +37,7 @@ namespace ShortcutMaster.Services
             // 이미 존재하는 아이디가 있다면 false를 반환
             if (existingUser != null)
             {
+                bool validPassword = BCrypt.Net.BCrypt.EnhancedVerify(signUpViewModel.Password, existingUser.Password);    // 암호 검증
                 return false;
             }
 
@@ -44,7 +45,7 @@ namespace ShortcutMaster.Services
             User newUser = new User
             {
                 UserID = signUpViewModel.UserId,
-                Password = signUpViewModel.Password,
+                Password = BCrypt.Net.BCrypt.EnhancedHashPassword(signUpViewModel.Password), // 암호화
                 Email = signUpViewModel.Email,
             };
             await session.Context.AddAsync(newUser);
