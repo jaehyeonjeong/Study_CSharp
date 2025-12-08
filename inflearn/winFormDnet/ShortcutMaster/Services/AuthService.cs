@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShortcutMaster.Data;
 using ShortcutMaster.Data.Entities;
+using ShortcutMaster.Data.Services;
 using ShortcutMaster.Features.SignUp;
 using System;
 using System.Collections.Generic;
@@ -31,8 +32,8 @@ namespace ShortcutMaster.Services
             await using var session = await _uowFactory.CreateSessionAsync();
 
             // 아이디가 이미 존재하는지 확인 여부
-            User? existingUser = await session.Context.Users.FirstOrDefaultAsync(u => u.UserID
-            == signUpViewModel.UserId);
+            var userService = session.Resolve<IUserService>();
+            User? existingUser = await userService.FindByUserId(signUpViewModel.UserId);
 
             // 이미 존재하는 아이디가 있다면 false를 반환
             if (existingUser != null)
@@ -41,14 +42,7 @@ namespace ShortcutMaster.Services
                 return false;
             }
 
-            // 새로운 사용자 생성
-            User newUser = new User
-            {
-                UserID = signUpViewModel.UserId,
-                Password = BCrypt.Net.BCrypt.EnhancedHashPassword(signUpViewModel.Password), // 암호화
-                Email = signUpViewModel.Email,
-            };
-            await session.Context.AddAsync(newUser);
+            await userService.CreateUser(signUpViewModel);
             await session.CommitAsync();
             
             return true;

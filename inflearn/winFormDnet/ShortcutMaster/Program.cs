@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using ShortcutMaster.Configs;
 using ShortcutMaster.Data;
+using ShortcutMaster.Data.Services;
 using ShortcutMaster.Features.Login;
 using ShortcutMaster.Features.SignUp;
 using ShortcutMaster.Services;
@@ -19,7 +20,7 @@ namespace ShortcutMaster
         // Singletone은 한번만 생성, AddTransient는 여러번 생성하는 경우
         private static void ConfigureServices(HostBuilderContext context, IServiceCollection services)
         {
-            // DbContext
+            // DbContext, 해당 컨택스트에서 scope도 생명주기를 자동으로 따르고 있음
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlite(context.Configuration.GetConnectionString("SQLite")); // json에서 만들어진 ConnectionString get
@@ -39,6 +40,9 @@ namespace ShortcutMaster
 
             // Services
             services.AddTransient<IAuthService, AuthService>();
+
+            // Data Services
+            services.AddScoped<IUserService, UserService>();
 
             // UIHandler
             services.AddSingleton<IFormHandler, FormHandler>();
