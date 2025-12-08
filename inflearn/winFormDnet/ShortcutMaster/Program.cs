@@ -8,6 +8,7 @@ using ShortcutMaster.Configs;
 using ShortcutMaster.Data;
 using ShortcutMaster.Features.Login;
 using ShortcutMaster.Features.SignUp;
+using ShortcutMaster.Services;
 using ShortcutMaster.UIHandler;
 using System.ComponentModel.Design;
 
@@ -23,7 +24,7 @@ namespace ShortcutMaster
             {
                 options.UseSqlite(context.Configuration.GetConnectionString("SQLite")); // json에서 만들어진 ConnectionString get
             });
-            //services.AddSingleton(typeof(IUnitOfWorkFactory<>), typeof(UnitOfWorkFactory<>)); // 제네릭 타입 의존성 주입
+            services.AddSingleton(typeof(IUnitOfWorkFactory<>), typeof(UnitOfWorkFactory<>)); // 제네릭 타입 의존성 주입
 
             // Configuration
             services.Configure<AppSettings>(context.Configuration);
@@ -35,6 +36,9 @@ namespace ShortcutMaster
             // Presenters
             services.AddTransient<LoginPresenter>();
             services.AddTransient<SignUpPresenter>();
+
+            // Services
+            services.AddTransient<IAuthService, AuthService>();
 
             // UIHandler
             services.AddSingleton<IFormHandler, FormHandler>();

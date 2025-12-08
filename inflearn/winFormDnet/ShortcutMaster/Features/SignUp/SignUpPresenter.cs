@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using ShortcutMaster.Features.Base;
+using ShortcutMaster.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +10,9 @@ using System.Threading.Tasks;
 
 namespace ShortcutMaster.Features.SignUp
 {
-    public class SignUpPresenter(IValidator<SignUpViewModel> _validator) : PresenterBase<ISignUpView, SignUpArgs>
+    public class SignUpPresenter(
+        IValidator<SignUpViewModel> _validator, 
+        IAuthService _authService) : PresenterBase<ISignUpView, SignUpArgs>
     {
         private SignUpViewModel _viewModel = new();
 
@@ -25,7 +28,7 @@ namespace ShortcutMaster.Features.SignUp
             View.Password = args.Password;
         }
 
-        private void View_OnSignUpClicked()
+        private async void View_OnSignUpClicked()
         {
             try
             {
@@ -37,8 +40,10 @@ namespace ShortcutMaster.Features.SignUp
                 // 포커스를 가져다 줘야 할 속성에서 에러가 나는지 알기 위함
                 View.FocusTextBox(error.PropertyName);
                 View.ShowMessage(error.ErrorMessage);
-
             }
+
+            // 회원 가입 로직
+            await _authService.SignUpAsync(_viewModel);    // 함수를 async로 변경하면 await로 반환
         }
 
         private void View_OnUserEmailChanged()
