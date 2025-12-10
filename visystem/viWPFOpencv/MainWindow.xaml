@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:viWPFOpencv"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="800">
+        Title="MainWindow" Height="800" Width="800">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -13,15 +13,22 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- 이미지 선택 버튼 -->
-        <Button Content="이미지 선택" Click="BtnSelectImage_Click" Width="100" Height="30"/>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Content="이미지 1 선택" Click="BtnSelectOneImage_Click" Margin ="10,0,0,0" Width="100" Height="30"/>
+            <Button Content="이미지 2 선택" Click="BtnSelectTwoImage_Click" Margin ="10,0,0,0" Width="100" Height="30"/>
+        </StackPanel>
 
         <!-- 원본 / 결과 이미지 출력 -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Image x:Name="ImgOriginal" Width="350" Height="400" Stretch="Uniform"/>
-            <Image x:Name="ImgThreshold" Width="350" Height="400" Stretch="Uniform" Margin="20,0,0,0"/>
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                <Image x:Name="ImgOriginal" Width="350" Height="200" Stretch="Uniform" Margin="0,0,0,10"/>
+                <Image x:Name="ImgSecondOri" Width="350" Height="200" Stretch="Uniform" Margin="0,20,0,0"/>
+            </StackPanel>
+            <Image x:Name="ImgResult" Width="350" Height="400" Stretch="Uniform" Margin="20,0,0,0"/>
         </StackPanel>
 
         <!-- Threshold 슬라이더 -->
@@ -60,6 +67,20 @@
              Width="30"
              Margin="5"/>
             <Button x:Name = "btnAdative" Margin="10,0,0,0" Click="btnAdative_Click" >Adaptive</Button>
+        </StackPanel>
+
+        <!-- 이미지 블랜딩 -->
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <TextBlock Text="Gamma / Beta :" VerticalAlignment="Center" Margin="0,0,10,0"/>
+            <Slider x:Name="SliderAlphaBeta" Minimum="0" Maximum="1" Value="0.5" TickFrequency="0.1" IsSnapToTickEnabled="True"
+              TickPlacement="BottomRight" Width="300" ValueChanged="SliderAlphaBeta_ValueChanged" />
+            <Label Content="alpha :" VerticalAlignment="Center" Margin="0,0,0,0"/>
+            <TextBlock x:Name="txtAlpha" Text="0.5" VerticalAlignment="Center" Margin="5,0,0,0"/>
+            <Label Content="| beta :" VerticalAlignment="Center" Margin="0,0,0,0"/>
+            <TextBlock x:Name="txtBeta" Text="0.5" VerticalAlignment="Center" Margin="5,0,0,0"/>
+            <Label Content="| gamma :" VerticalAlignment="Center" Margin="0,0,0,0"/>
+            <TextBox x:Name="txtGamma" Text="0.0" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            <CheckBox x:Name ="chkApply" Margin="10,0,0,0">blend Apply</CheckBox>
         </StackPanel>
 
     </Grid>

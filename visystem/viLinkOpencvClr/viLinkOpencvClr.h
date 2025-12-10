@@ -13,10 +13,14 @@ namespace viLinkOpencvClr {
 		// 1장 Threshold 처리
 		// C# 연동 시 파라미터 값 반환은 % 기호 적용
 		static Bitmap^ ThresholdImage(Bitmap^ input, double threshValue, 
-			int type, bool isOtsu, int% nOtsuValue);	
+			int type, bool isOtsu, int% nOtsuValue);		// 일반
 
 		static Bitmap^ ThresholdImage(Bitmap^ input, int nadtiveType,
-			int nThType, int nblockSize, double dC);
+			int nThType, int nblockSize, double dC);		// 적응형
+
+		// 2장 Calculation
+		static Bitmap^ BlendImage(Bitmap^ img1, Bitmap^ img2,
+			double alpha, double beta, double gamma);		// 이미지 합성
 
 	private:
 		static cv::Mat BitmapToMat(Bitmap^ bmp);

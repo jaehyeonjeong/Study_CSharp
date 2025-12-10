@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Net.Http.Headers;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using viLinkOpencvClr;
@@ -24,14 +25,15 @@ namespace viWPFOpencv
         static int _nOstuValue;
 
         private Bitmap _originalBitmap;
+        private Bitmap _secondOriBitmap;
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        // 이미지 선택 버튼
-        private void BtnSelectImage_Click(object sender, RoutedEventArgs e)
+        // 이미지 선택 버튼 1
+        private void BtnSelectOneImage_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
@@ -49,6 +51,18 @@ namespace viWPFOpencv
                 }
             }
         }
+
+        private void BtnSelectTwoImage_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+            if (dlg.ShowDialog() == true)
+            {
+                _secondOriBitmap = new Bitmap(dlg.FileName);
+                ImgSecondOri.Source = ConvertToBitmapImage(_secondOriBitmap);
+            }
+        }
+
 
         private void SliderThreshold_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
@@ -70,13 +84,21 @@ namespace viWPFOpencv
         private void ApplyThreshold(int threshValue)
         {
             Bitmap result = ImageProcessor.ThresholdImage(_originalBitmap, threshValue, _thresholdValue, _isOtsu, ref _nOstuValue);
-            ImgThreshold.Source = ConvertToBitmapImage(result);
+            ImgResult.Source = ConvertToBitmapImage(result);
         }
 
         private void ApplyThreshold(int threshType, int nAdaptiveThresholdType, int nBlockSize, double dC)
         {
             Bitmap result = ImageProcessor.ThresholdImage(_originalBitmap, nAdaptiveThresholdType, threshType, nBlockSize, dC);
-            ImgThreshold.Source = ConvertToBitmapImage(result);
+            ImgResult.Source = ConvertToBitmapImage(result);
+        }
+
+        // 이미지 합성
+        private void BlendingImage(double dAlpha, double dBeta, double dGamma)
+        {
+            // alpha : 지정할 가중치, beta : 지정할 역가중치, gamma : 연산 결과에 가감할 상수(흔히 0으로 적용)
+            Bitmap result = ImageProcessor.BlendImage(_originalBitmap, _secondOriBitmap, dAlpha, dBeta, dGamma);
+            ImgResult.Source = ConvertToBitmapImage(result);
         }
 
         // Bitmap → BitmapImage 변환
@@ -154,6 +176,30 @@ namespace viWPFOpencv
             //private void ApplyThreshold(int threshValue, int nAdaptiveThresholdType, int nBlockSize, double dC)
             ApplyThreshold(_thresholdValue, _adaptiveThresholdValue, 
                 int.Parse(txtBlockSize.Text), double.Parse(txtCValue.Text));
+        }
+
+        private void SliderAlphaBeta_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            try
+            {
+                double alpha = ((double)SliderAlphaBeta.Value);
+                double beta = (1.0 - (double)SliderAlphaBeta.Value);
+
+                txtAlpha.Text = alpha.ToString();
+                txtBeta.Text = beta.ToString();
+
+                if (chkApply.IsChecked.Value)
+                {
+                    if (_originalBitmap != null && _secondOriBitmap != null)
+                    {
+                        BlendingImage(alpha, beta, double.Parse(txtGamma.Text));
+                    }
+                }
+            }
+            catch (NullReferenceException ex)
+            {
+                Debug.Print(ex.Message);
+            }
         }
     }
 }

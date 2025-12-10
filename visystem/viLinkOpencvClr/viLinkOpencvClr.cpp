@@ -46,6 +46,28 @@ namespace viLinkOpencvClr {
 		return MatToBitmap(matBinary);
 	}
 
+	Bitmap^ ImageProcessor::BlendImage(Bitmap^ img1, Bitmap^ img2,
+		double alpha, double beta, double gamma)
+	{
+		// Bitmap → Mat 변환
+		cv::Mat mat1 = BitmapToMat(img1);
+		cv::Mat mat2 = BitmapToMat(img2);
+		cv::Mat matBlend;
+
+		// 두 이미지 크기가 다른 경우 resize (필요 시)
+		if (mat1.size() != mat2.size())
+		{
+			// mat2를 mat1 기준으로 리사이징
+			cv::resize(mat2, mat2, mat1.size());
+		}
+
+		// addWeighted 적용:  result = alpha * mat1 + beta * mat2 + gamma
+		cv::addWeighted(mat1, alpha, mat2, beta, gamma, matBlend);
+
+		// Mat → Bitmap 변환
+		return MatToBitmap(matBlend);
+	}
+
 	cv::Mat ImageProcessor::BitmapToMat(Bitmap^ bmp) {
 		Rectangle rect(0, 0, bmp->Width, bmp->Height);
 		BitmapData^ bmpData = bmp->LockBits(rect,
