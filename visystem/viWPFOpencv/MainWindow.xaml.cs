@@ -17,7 +17,9 @@ namespace viWPFOpencv
     {
         // 전역 변수 (예: Threshold 모드)
         private string _thresholdMode = "THRESH_BINARY";
+        private string _adaptiveThreshold = "ADAPTIVE_THRESH_MEAN_C";
         int _thresholdValue = 0;
+        int _adaptiveThresholdValue = 0;
         bool _isOtsu = false;
         static int _nOstuValue;
 
@@ -71,6 +73,12 @@ namespace viWPFOpencv
             ImgThreshold.Source = ConvertToBitmapImage(result);
         }
 
+        private void ApplyThreshold(int threshType, int nAdaptiveThresholdType, int nBlockSize, double dC)
+        {
+            Bitmap result = ImageProcessor.ThresholdImage(_originalBitmap, nAdaptiveThresholdType, threshType, nBlockSize, dC);
+            ImgThreshold.Source = ConvertToBitmapImage(result);
+        }
+
         // Bitmap → BitmapImage 변환
         private BitmapImage ConvertToBitmapImage(Bitmap bmp)
         {
@@ -117,6 +125,35 @@ namespace viWPFOpencv
             SliderThreshold.Value = _nOstuValue;
             TxtValue.Text = _nOstuValue.ToString();
             _isOtsu = false;
+        }
+
+        
+        private void RadioButton_Adative_Click(object sender, RoutedEventArgs e)
+        {
+            var rb = sender as System.Windows.Controls.RadioButton;
+            try
+            {
+                if (rb != null)
+                {
+                    // 전역 변수 값 변경
+                    _adaptiveThreshold = rb.Content.ToString();     // 컨텐트에 있는 문자열 반환
+
+                    AdaptiveThreshold th = (AdaptiveThreshold)Enum.AdaptiveThreshold.Parse(typeof(AdaptiveThreshold), _adaptiveThreshold);   // 문자열을 Enum으로 변경
+
+                    _adaptiveThresholdValue = (int)th;  // Enum을 int로 변경
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnAdative_Click(object sender, RoutedEventArgs e)
+        {
+            //private void ApplyThreshold(int threshValue, int nAdaptiveThresholdType, int nBlockSize, double dC)
+            ApplyThreshold(_thresholdValue, _adaptiveThresholdValue, 
+                int.Parse(txtBlockSize.Text), double.Parse(txtCValue.Text));
         }
     }
 }

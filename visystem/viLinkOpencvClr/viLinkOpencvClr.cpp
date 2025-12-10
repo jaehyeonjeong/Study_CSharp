@@ -22,13 +22,27 @@ namespace viLinkOpencvClr {
 		// THRESH_BINARY(type_flag) -> Threshold 타입 
 		if (isOtsu)
 		{
-			// 자동 최적화 Threshold 이미지 처리
+			// 자동 최적화 Threshold 이미지 처리 (명암 분포가 가장 균일함)
 			nOtsuValue = cv::threshold(matGray, matBinary, -1, 255, cv::THRESH_BINARY | cv::THRESH_OTSU);
 		}
 		else
 		{
 			cv::threshold(matGray, matBinary, threshValue, 255, type);
 		}
+		return MatToBitmap(matBinary);
+	}
+
+	Bitmap^ ImageProcessor::ThresholdImage(Bitmap^ input, int nadtiveType,
+		int nThType, int nblockSize, double dC) {
+		cv::Mat matInput = BitmapToMat(input);
+		cv::Mat matGray, matBinary;
+
+		cv::cvtColor(matInput, matGray, cv::COLOR_BGR2GRAY);
+
+		cv::adaptiveThreshold(matGray, matBinary, 
+			255, nadtiveType,
+			nThType, nblockSize, dC);
+
 		return MatToBitmap(matBinary);
 	}
 

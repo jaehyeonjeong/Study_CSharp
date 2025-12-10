@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:viWPFOpencv"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
+        Title="MainWindow" Height="700" Width="800">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -29,9 +30,9 @@
             <Slider x:Name="SliderThreshold" Minimum="0" Maximum="255" Value="128"
                     Width="300" ValueChanged="SliderThreshold_ValueChanged"/>
             <TextBlock x:Name="TxtValue" Text="128" VerticalAlignment="Center" Margin="10,0,0,0"/>
-            <Button x:Name ="btnOtsu" Margin="10,0,0,0" Click="btnOtsu_Click"> otsu Algorithm </Button>
+            <Button x:Name ="btnOtsu" Margin="10,0,0,0" Click="btnOtsu_Click">otsu Algorithm</Button>
         </StackPanel>
-        
+
         <!-- 라디오 버튼 5개 -->
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
             <RadioButton Content="THRESH_BINARY" GroupName="Options" Margin="5" Click="RadioButton_Click" IsChecked="True"/>
@@ -39,6 +40,26 @@
             <RadioButton Content="THRESH_TRUNC" GroupName="Options" Margin="5" Click="RadioButton_Click"/>
             <RadioButton Content="THRESH_TOZERO" GroupName="Options" Margin="5" Click="RadioButton_Click"/>
             <RadioButton Content="THRESH_TOZERO_INV" GroupName="Options" Margin="5" Click="RadioButton_Click"/>
+        </StackPanel>
+
+        <!-- adative 2개 -->
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <RadioButton Content="ADAPTIVE_THRESH_MEAN_C" GroupName="OptionAdative" Margin="5" Click="RadioButton_Adative_Click" IsChecked="True"/>
+            <RadioButton Content="ADAPTIVE_THRESH_GAUSSIAN_C" GroupName="OptionAdative" Margin="5" Click="RadioButton_Adative_Click"/>
+            <!-- Label + TextBox(1) -->
+            <Label Content="blockSize :" VerticalAlignment="Center" Margin="5,0,0,0"/>
+            <TextBox x:Name="txtBlockSize"
+             Text="3"
+             Width="30"
+             Margin="5"/>
+
+            <!-- Label + TextBox(2) -->
+            <Label Content="C :" VerticalAlignment="Center" Margin="5,0,0,0"/>
+            <TextBox x:Name="txtCValue"
+             Text="1"
+             Width="30"
+             Margin="5"/>
+            <Button x:Name = "btnAdative" Margin="10,0,0,0" Click="btnAdative_Click" >Adaptive</Button>
         </StackPanel>
 
     </Grid>
