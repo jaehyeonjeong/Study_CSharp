@@ -68,6 +68,42 @@ namespace viLinkOpencvClr {
 		return MatToBitmap(matBlend);
 	}
 
+	Bitmap^ ImageProcessor::BitWiseCalc(Bitmap^ img1, Bitmap^ img2, int type)
+	{
+		// Bitmap → Mat 변환
+		cv::Mat mat1 = BitmapToMat(img1);
+		cv::Mat mat2 = BitmapToMat(img2);
+		cv::Mat matResult;
+
+		// 두 이미지 크기가 다른 경우 resize (필요 시)
+		if (mat1.size() != mat2.size())
+		{
+			// mat2를 mat1 기준으로 리사이징
+			cv::resize(mat2, mat2, mat1.size());
+		}
+
+		switch (type)
+		{
+		case 0:
+			cv::bitwise_or(mat1, mat2, matResult);
+			break;
+		case 1:
+			cv::bitwise_and(mat1, mat2, matResult);
+			break;
+		case 2:
+			cv::bitwise_xor(mat1, mat2, matResult);
+			break;
+		case 3:
+			cv::bitwise_not(mat1, matResult);
+			break;
+		case 4:
+			cv::absdiff(mat1, mat2, matResult);
+			break;
+		}
+
+		return MatToBitmap(matResult);
+	}
+
 	cv::Mat ImageProcessor::BitmapToMat(Bitmap^ bmp) {
 		Rectangle rect(0, 0, bmp->Width, bmp->Height);
 		BitmapData^ bmpData = bmp->LockBits(rect,

@@ -1,10 +1,12 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Net.Http.Headers;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using viLinkOpencvClr;
 using viWPFOpencv.Enum;
@@ -21,6 +23,7 @@ namespace viWPFOpencv
         private string _adaptiveThreshold = "ADAPTIVE_THRESH_MEAN_C";
         int _thresholdValue = 0;
         int _adaptiveThresholdValue = 0;
+        private string _bitwiseMethod = "bitwiseOR";
         bool _isOtsu = false;
         static int _nOstuValue;
 
@@ -149,7 +152,7 @@ namespace viWPFOpencv
             _isOtsu = false;
         }
 
-        
+
         private void RadioButton_Adative_Click(object sender, RoutedEventArgs e)
         {
             var rb = sender as System.Windows.Controls.RadioButton;
@@ -174,7 +177,7 @@ namespace viWPFOpencv
         private void btnAdative_Click(object sender, RoutedEventArgs e)
         {
             //private void ApplyThreshold(int threshValue, int nAdaptiveThresholdType, int nBlockSize, double dC)
-            ApplyThreshold(_thresholdValue, _adaptiveThresholdValue, 
+            ApplyThreshold(_thresholdValue, _adaptiveThresholdValue,
                 int.Parse(txtBlockSize.Text), double.Parse(txtCValue.Text));
         }
 
@@ -199,6 +202,27 @@ namespace viWPFOpencv
             catch (NullReferenceException ex)
             {
                 Debug.Print(ex.Message);
+            }
+        }
+
+        private void BitWiseCalc(int type)
+        {
+            Bitmap result = ImageProcessor.BitWiseCalc(_originalBitmap, _secondOriBitmap, type);
+            ImgResult.Source = ConvertToBitmapImage(result);
+        }
+
+
+        private void RadioButton_Bitwise_Click(object sender, RoutedEventArgs e)
+        {
+            var rb = sender as System.Windows.Controls.RadioButton;
+
+            if (rb != null)
+            {
+                _bitwiseMethod = rb.Content.ToString();     // 컨텐트에 있는 문자열 반환
+
+                Bitwise bitwise = (Bitwise)Enum.Bitwise.Parse(typeof(Bitwise), _bitwiseMethod);   // 문자열을 Enum으로 변경
+
+                BitWiseCalc((int)bitwise);
             }
         }
     }

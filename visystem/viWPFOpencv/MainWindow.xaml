@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:viWPFOpencv"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="800">
+        Title="MainWindow" Height="900" Width="800">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -71,7 +72,7 @@
 
         <!-- 이미지 블랜딩 -->
         <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <TextBlock Text="Gamma / Beta :" VerticalAlignment="Center" Margin="0,0,10,0"/>
+            <TextBlock Text="alpha / Beta :" VerticalAlignment="Center" Margin="0,0,10,0"/>
             <Slider x:Name="SliderAlphaBeta" Minimum="0" Maximum="1" Value="0.5" TickFrequency="0.1" IsSnapToTickEnabled="True"
               TickPlacement="BottomRight" Width="300" ValueChanged="SliderAlphaBeta_ValueChanged" />
             <Label Content="alpha :" VerticalAlignment="Center" Margin="0,0,0,0"/>
@@ -81,6 +82,15 @@
             <Label Content="| gamma :" VerticalAlignment="Center" Margin="0,0,0,0"/>
             <TextBox x:Name="txtGamma" Text="0.0" VerticalAlignment="Center" Margin="10,0,0,0"/>
             <CheckBox x:Name ="chkApply" Margin="10,0,0,0">blend Apply</CheckBox>
+        </StackPanel>
+
+        <!-- 이미지 블랜딩 -->
+        <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <RadioButton Content="bitwiseOR" GroupName="bitwise" Margin="5" Click="RadioButton_Bitwise_Click" IsChecked="True"/>
+            <RadioButton Content="bitwiseAND" GroupName="bitwise" Margin="5" Click="RadioButton_Bitwise_Click"/>
+            <RadioButton Content="bitwiseXOR" GroupName="bitwise" Margin="5" Click="RadioButton_Bitwise_Click"/>
+            <RadioButton Content="bitwiseNOT" GroupName="bitwise" Margin="5" Click="RadioButton_Bitwise_Click"/>
+            <RadioButton Content="absDiff" GroupName="bitwise" Margin="5" Click="RadioButton_Bitwise_Click"/>
         </StackPanel>
 
     </Grid>

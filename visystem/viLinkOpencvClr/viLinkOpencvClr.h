@@ -22,6 +22,10 @@ namespace viLinkOpencvClr {
 		static Bitmap^ BlendImage(Bitmap^ img1, Bitmap^ img2,
 			double alpha, double beta, double gamma);		// 이미지 합성
 
+
+		static Bitmap^ BitWiseCalc(Bitmap^ img1, Bitmap^ img2, int type);
+
+
 	private:
 		static cv::Mat BitmapToMat(Bitmap^ bmp);
 		static Bitmap^ MatToBitmap(const cv::Mat& mat);
