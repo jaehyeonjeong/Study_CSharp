@@ -25,6 +25,10 @@ namespace viLinkOpencvClr {
 
 		static Bitmap^ BitWiseCalc(Bitmap^ img1, Bitmap^ img2, int type);
 
+		// 3장 Histogram
+		static Bitmap^ GrayColorBitmap(Bitmap^ src);
+
+		static System::Windows::Media::Imaging::BitmapSource^ CreateHistogram(System::Drawing::Bitmap^ bitmap);
 
 	private:
 		static cv::Mat BitmapToMat(Bitmap^ bmp);

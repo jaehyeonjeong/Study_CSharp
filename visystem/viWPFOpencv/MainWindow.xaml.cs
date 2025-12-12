@@ -1,15 +1,20 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.ComponentModel;
 using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Net.Http.Headers;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using viLinkOpencvClr;
 using viWPFOpencv.Enum;
+
 
 namespace viWPFOpencv
 {
@@ -29,11 +34,45 @@ namespace viWPFOpencv
 
         private Bitmap _originalBitmap;
         private Bitmap _secondOriBitmap;
+        private Bitmap _resultBitmap;
 
         public MainWindow()
         {
             InitializeComponent();
+
+            // ImgResult.Source 속성 변경 감지
+            var dpd = DependencyPropertyDescriptor.FromProperty(
+                System.Windows.Controls.Image.SourceProperty, typeof(System.Windows.Controls.Image));
+
+            if (dpd != null)
+            {
+                dpd.AddValueChanged(ImgResult, ImgResult_SourceChanged);
+            }
         }
+
+        private void ImgResult_SourceChanged(object sender, EventArgs e)
+        {
+            // WPF Image.Source 가져오기
+            BitmapSource bmpSource = ImgResult.Source as BitmapSource;
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                BmpBitmapEncoder encoder = new BmpBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(bmpSource));
+                encoder.Save(ms);
+
+                using (var bmp = new Bitmap(ms))
+                {
+                    // 복사본 생성 후 넘기기
+                    Bitmap bmpCopy = new Bitmap(bmp);
+                    _resultBitmap = ImageProcessor.GrayColorBitmap(bmpCopy);
+                } // 원본 bmp는 Dispose되어도 문제 없음
+            }
+
+            ImgRstGray.Source = ConvertToBitmapImage(_resultBitmap);
+            ImgHistogram.Source = ImageProcessor.CreateHistogram(_resultBitmap);
+        }
+
 
         // 이미지 선택 버튼 1
         private void BtnSelectOneImage_Click(object sender, RoutedEventArgs e)
@@ -92,8 +131,15 @@ namespace viWPFOpencv
 
         private void ApplyThreshold(int threshType, int nAdaptiveThresholdType, int nBlockSize, double dC)
         {
-            Bitmap result = ImageProcessor.ThresholdImage(_originalBitmap, nAdaptiveThresholdType, threshType, nBlockSize, dC);
-            ImgResult.Source = ConvertToBitmapImage(result);
+            try
+            {
+                Bitmap result = ImageProcessor.ThresholdImage(_originalBitmap, nAdaptiveThresholdType, threshType, nBlockSize, dC);
+                ImgResult.Source = ConvertToBitmapImage(result);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         // 이미지 합성
